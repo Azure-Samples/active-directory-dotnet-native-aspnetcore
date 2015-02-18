@@ -1,4 +1,4 @@
-# NativeClient-vNext
+# NativeClient-AspNet5
 A WPF application that calls a Web API running on ASP.NET 5 protected by Azure AD OAuth Bearer Authentication.
 
 This sample demonstrates a .Net WPF application calling a web API that is secured using Azure AD. The .Net application uses the Active Directory Authentication Library (ADAL) to obtain a JWT access token through the OAuth 2.0 protocol. The access token is sent to the web API, which authenticates the user using the OWIN OAuth Bearer Authentication middleware.
