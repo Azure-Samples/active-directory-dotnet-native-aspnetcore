@@ -126,4 +126,28 @@ Coming soon.
 
 ## How To Recreate This Sample
 
-Coming soon.
+First, in Visual Studio 2015 create an empty solution to host the  projects.  Then, follow these steps to create each project.
+
+### Creating the TodoListService Project
+
+1. In the solution, create a new "ASM.NET 5 MVC Web API" project called TodoListService.
+2. Add the `Microsoft.AspNet.Security.OAuthBearer` and `Microsoft.Framework.ConfigurationModel.Json` NuGets to the project.
+2. Create a new `Models` folder, and add a new class to it called `TodoItem.cs`.  Copy the implementation of TodoItem from this sample into the class.
+3. Delete the existing `ValuesController.cs`, and add a new Web API controller class called `TodoListController`.
+4. Copy the implementation of the TodoListController from this sample into the controller.  Don't forget to add the `[Authorize]` attribute to the class.
+5. In `TodoListController` resolving missing references by adding `using` statements for `System.Collections.Concurrent`, `TodoListService.Models`, `System.Security.Claims`.
+6. Add a new ASP.NET Configuration File called `config.json` to the project.  Replace its contents with those of the sample.
+7. Replace the implementation of `Startup.cs` with that of the sample, resolving any missing references such as `Microsoft.Framework.ConfigurationModel`.
+
+### Creating the TodoListClient Project
+
+1. In the solution, create a new Windows --> WPF Application called TodoListClient.
+2. Add the (stable release) Active Directory Authentication Library (ADAL) NuGet, Microsoft.IdentityModel.Clients.ActiveDirectory to the project.
+3. Add  assembly references to `System.Net.Http`, `System.Web.Extensions`, `System.Security`, and `System.Configuration`.
+4. Add a new class to the project called `TodoItem.cs`.  Copy the code from the sample project file of same name into this class, completely replacing the code in the file in the new project.
+5. Add a new class to the project called `FileCache.cs`.  Copy the code from the sample project file of same name into this class, completely replacing the code in the file in the new project.
+6. Copy the markup from `MainWindow.xaml' in the sample project into the file of same name in the new project, completely replacing the markup in the file in the new project.
+7. Copy the code from `MainWindow.xaml.cs` in the sample project into the file of same name in the new project, completely replacing the code in the file in the new project.
+8. In `app.config` create keys for `ida:AADInstance`, `ida:Tenant`, `ida:ClientId`, `ida:RedirectUri`, `todo:TodoListResourceId`, and `todo:TodoListBaseAddress` and set them accordingly.  For the public Azure cloud, the value of `ida:AADInstance` is `https://login.windows.net/{0}`.
+
+Finally, in the properties of the solution itself, set both projects as startup projects.
