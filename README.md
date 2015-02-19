@@ -151,4 +151,4 @@ First, in Visual Studio 2015 create an empty solution to host the  projects.  Th
 7. Copy the code from `MainWindow.xaml.cs` in the sample project into the file of same name in the new project, completely replacing the code in the file in the new project.
 8. In `app.config` create keys for `ida:AADInstance`, `ida:Tenant`, `ida:ClientId`, `ida:RedirectUri`, `todo:TodoListResourceId`, and `todo:TodoListBaseAddress` and set them accordingly.  For the public Azure cloud, the value of `ida:AADInstance` is `https://login.windows.net/{0}`.
 
-Finally, in the properties of the solution itself, set both projects as startup projects.
+Finally, in the properties of the solution itself, set both projects as startup projects.  Follow the steps in "How to Run This Sample" to configure and run each project.
