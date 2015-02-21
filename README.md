@@ -8,7 +8,7 @@ For more information about how the protocols work in this scenario and other sce
 ## How To Run This Sample
 
 To run this sample you will need:
-- Visual Studio 2015.  To acquire the CTP release of Visual Studio, see [here](https://link.com)
+- Visual Studio 2015 CTP6.
 - An Internet connection
 - An Azure subscription (a free trial is sufficient)
 
@@ -126,7 +126,7 @@ Coming soon.
 
 ## How To Recreate This Sample
 
-First, in Visual Studio 2015 create an empty solution to host the  projects.  Then, follow these steps to create each project.
+First, in Visual Studio 2015 CTP6 create an empty solution to host the  projects.  Then, follow these steps to create each project.
 
 ### Creating the TodoListService Project
 
