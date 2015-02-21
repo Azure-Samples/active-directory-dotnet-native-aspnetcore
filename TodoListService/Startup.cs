@@ -34,6 +34,7 @@ namespace TodoListService
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Configure the app to use OAuth Bearer Authentication
             app.UseOAuthBearerAuthentication(options =>
             {
                 options.Audience = Configuration.Get("AzureAd:Audience");
