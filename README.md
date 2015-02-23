@@ -131,7 +131,7 @@ First, in Visual Studio 2015 CTP6 create an empty solution to host the  projects
 ### Creating the TodoListService Project
 
 1. In the solution, create a new "ASM.NET 5 MVC Web API" project called TodoListService.
-2. Enable SSL on the project by folowing the steps in the below section.
+2. Enable SSL on the project by following the steps outlined in the below section.
 2. Add the `Microsoft.AspNet.Security.OAuthBearer` and `Microsoft.Framework.ConfigurationModel.Json` NuGets to the project.
 2. Create a new `Models` folder, and add a new class to it called `TodoItem.cs`.  Copy the implementation of TodoItem from this sample into the class.
 3. Delete the existing `ValuesController.cs`, and add a new Web API controller class called `TodoListController`.
