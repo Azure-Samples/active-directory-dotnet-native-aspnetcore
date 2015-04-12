@@ -1,6 +1,6 @@
 ﻿{
 	"AzureAd": {
-		"AadInstance": "https://login.windows.net/{0}",
+		"AadInstance": "https://login.microsoftonline.com/{0}",
 		"Tenant": "[Enter the name of your tenant, e.g. contoso.onmicrosoft.com]",
 		"Audience": "[Enter the App Id URI of your application from the portal, e.g. https://contoso.onmicrosoft.com/TodoListService]"
 	}
