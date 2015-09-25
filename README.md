@@ -1,10 +1,11 @@
 ---
-services:
-platforms:
-author: azure
+services: active-directory
+platforms: dotnet
+author: dstrockis
 ---
 
 # Caling a ASP.NET 5 Web API from a WPF application using Azure AD
+
 A WPF application that calls a Web API running on ASP.NET 5 protected by Azure AD OAuth Bearer Authentication.
 
 This sample demonstrates a .Net WPF application calling a web API that is secured using Azure AD. The .Net application uses the Active Directory Authentication Library (ADAL) to obtain a JWT access token through the OAuth 2.0 protocol. The access token is sent to the ASP.NET 5 Web API, which authenticates the user using the OWIN OAuth Bearer Authentication middleware.
@@ -14,17 +15,17 @@ For more information about how the protocols work in this scenario and other sce
 ## How To Run This Sample
 
 To run this sample you will need:
-- [Visual Studio 2015 CTP6](http://www.visualstudio.com/downloads/visual-studio-2015-ctp-vs)
+- [Visual Studio 2015](https://www.visualstudio.com/downloads/download-visual-studio-vs)
 - An Internet connection
 - An Azure subscription (a free trial is sufficient)
 
-Every Azure subscription has an associated Azure Active Directory tenant.  If you don't already have an Azure subscription, you can get a free subscription by signing up at [http://www.windowsazure.com](http://www.windowsazure.com).  All of the Azure AD features used by this sample are available free of charge.
+Every Azure subscription has an associated Azure Active Directory tenant.  If you don't already have an Azure subscription, you can get a free subscription by signing up at [https://azure.microsoft.com](https://azure.microsoft.com).  All of the Azure AD features used by this sample are available free of charge.
 
 ### Step 1:  Clone or download this repository
 
 From your shell or command line:
 
-`git clone https://github.com/AzureADSamples/NativeClient-AspNet5.git`
+`git clone https://github.com/Azure-Samples/active-directory-dotnet-native-aspnet5.git`
 
 ### Step 2:  Create a user account in your Azure Active Directory tenant
 
@@ -159,8 +160,8 @@ First, in Visual Studio 2015 CTP6 create an empty solution to host the  projects
 
 Finally, in the properties of the solution itself, set both projects as startup projects.  Follow the steps in "How to Run This Sample" to configure and run each project.
 
-### Enable SSL in Visual Studio 2015 CTP6
-These steps are temporarily necessary to enable SSL only for Visual Studio 2015 CTP6: First, hit F5 to run the application.  Once you see the homepage, you may close the browser and stop IIS Express.  In a text editor, open the file `%userprofile%\documents\IISExpress\config\applicatoinhost.confg`.  Find the entry for your app in the `<sites>` node.  Add an https protocol binding to this entry for a port between 44300 and 44399, similar to the following:
+### Enable SSL in Visual Studio 2015
+These steps are temporarily necessary to enable SSL only for Visual Studio 2015: First, hit F5 to run the application.  Once you see the homepage, you may close the browser and stop IIS Express.  In a text editor, open the file `%userprofile%\documents\IISExpress\config\applicatoinhost.confg`.  Find the entry for your app in the `<sites>` node.  Add an https protocol binding to this entry for a port between 44300 and 44399, similar to the following:
 
 ```
 <site name="WebApplication1" id="2">
