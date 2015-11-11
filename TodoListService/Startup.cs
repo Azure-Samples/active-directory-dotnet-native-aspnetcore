@@ -1,15 +1,8 @@
 ﻿using System;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Routing;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.ConfigurationModel;
-using Microsoft.AspNet.Security.OAuthBearer;
-using Microsoft.AspNet.Security;
-using System.IdentityModel.Tokens;
-using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace TodoListService
 {
@@ -18,8 +11,9 @@ namespace TodoListService
         public Startup(IHostingEnvironment env)
         {
             // Setup configuration sources.
-            Configuration = new Configuration()
-                .AddJsonFile("config.json");
+            var cb = new ConfigurationBuilder(".");
+            cb.AddJsonFile("config.json");
+            Configuration = cb.Build();
         }
 
         public IConfiguration Configuration { get; set; }
@@ -37,8 +31,8 @@ namespace TodoListService
             // Configure the app to use OAuth Bearer Authentication
             app.UseOAuthBearerAuthentication(options =>
             {
-                options.Audience = Configuration.Get("AzureAd:Audience");
-                options.Authority = String.Format(Configuration.Get("AzureAd:AadInstance"), Configuration.Get("AzureAd:Tenant"));
+                options.Audience = Configuration["AzureAd:Audience"];
+                options.Authority = String.Format(Configuration["AzureAd:AadInstance"], Configuration["AzureAd:Tenant"]);
             });
 
             app.UseStaticFiles();

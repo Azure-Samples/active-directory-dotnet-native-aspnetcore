@@ -1,10 +1,10 @@
-﻿using System;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 using TodoListService.Models;
-using System.Collections.Concurrent;
 
 namespace TodoListService.Controllers
 {
