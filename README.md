@@ -4,7 +4,7 @@ platforms: dotnet
 author: dstrockis
 ---
 
-# Caling a ASP.NET 5 Web API from a WPF application using Azure AD
+# Calling a ASP.NET 5 Web API from a WPF application using Azure AD
 
 A WPF application that calls a Web API running on ASP.NET 5 protected by Azure AD OAuth Bearer Authentication.
 
