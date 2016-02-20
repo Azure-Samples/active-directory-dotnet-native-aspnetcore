@@ -1,18 +1,18 @@
 {
-    /* Click to learn more about project.json  http://go.microsoft.com/fwlink/?LinkID=517074 */
     "webroot": "wwwroot",
     "version": "1.0.0-*", 
     "dependencies": {
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta3",
-        "Microsoft.AspNet.Mvc": "6.0.0-beta3",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-beta3",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta3",
-		"Microsoft.AspNet.Security.OAuthBearer": "1.0.0-beta3",
-        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta3"
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta7",
+        "Microsoft.AspNet.Mvc": "6.0.0-beta7",
+        "Microsoft.AspNet.StaticFiles": "1.0.0-beta7",
+		"Microsoft.AspNet.Authentication.OAuthBearer": "1.0.0-beta7",
+        "Microsoft.AspNet.Hosting": "1.0.0-beta7-*",
+        "Microsoft.AspNet.Server.Kestrel": "1.0.0-beta7-*",
+        "Microsoft.Framework.Configuration.Abstractions": "1.0.0-beta7",
+        "Microsoft.Framework.Configuration.Json": "1.0.0-beta7"
     },
     "frameworks": {
-        "aspnet50": { },
-        "aspnetcore50": { }
+        "dnxcore50": { }
     },
     "exclude": [
         "wwwroot",
@@ -25,5 +25,8 @@
         "**.kproj",
         "**.user",
         "**.vspscc"
-    ]
+    ],
+    "commands": {
+        "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel --server.urls http://*:5004"
+    }
 }
