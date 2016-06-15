@@ -12,10 +12,14 @@ This sample demonstrates a .Net WPF application calling a web API that is secure
 
 For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).
 
+> This sample has finally been updated to ASP.NET Core RC2.  Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
+
 ## How To Run This Sample
 
-To run this sample you will need:
-- [Visual Studio 2015](https://www.visualstudio.com/downloads/download-visual-studio-vs)
+Getting started is simple!  To run this sample you will need:
+- [.NET Core & .NET Core SDK RC2 releases](https://www.microsoft.com/net/download)
+- [ASP.NET Core RC2 release](https://blogs.msdn.microsoft.com/webdev/2016/05/16/announcing-asp-net-core-rc2/)
+- [Visual Studio 2015 Update 2](https://www.visualstudio.com/en-us/downloads/visual-studio-2015-downloads-vs.aspx)
 - An Internet connection
 - An Azure subscription (a free trial is sufficient)
 
@@ -25,7 +29,7 @@ Every Azure subscription has an associated Azure Active Directory tenant.  If yo
 
 From your shell or command line:
 
-`git clone https://github.com/Azure-Samples/active-directory-dotnet-native-aspnet5.git`
+`git clone https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore.git`
 
 ### Step 2:  Create a user account in your Azure Active Directory tenant
 
@@ -44,7 +48,7 @@ There are two projects in this sample.  Each needs to be separately registered i
 5. In the drawer, click Add.
 6. Click "Add an application my organization is developing".
 7. Enter a friendly name for the application, for example "TodoListService", select "Web Application and/or Web API", and click next.
-8. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44322`.
+8. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44351`.
 9. For the App ID URI, enter `https://<your_tenant_name>/TodoListService`, replacing `<your_tenant_name>` with the name of your Azure AD tenant.  Click OK to complete the registration.
 
 #### Register the TodoListClient app
@@ -66,9 +70,9 @@ There are two projects in this sample.  Each needs to be separately registered i
 #### Configure the TodoListService project
 
 1. Open the solution in Visual Studio 2015.
-2. In the TodoListService project, open the `config.json` file.
+2. In the TodoListService project, open the `appsettings.json` file.
 3. Find the `Tenant` property and replace the value with your AAD tenant name, e.g. contoso.onmicrosoft.com.
-4. Find the app key `Audience` and replace the value with the App ID URI you registered earlier, for example `https://<your_tenant_name>/TodoListService`.
+4. Find the `Audience` property and replace the value with the App ID URI you registered earlier, for example `https://<your_tenant_name>/TodoListService`.
 
 #### Configure the TodoListClient project
 
@@ -122,56 +126,3 @@ Clean the solution, rebuild the solution, and run it.  You might want to go into
 Explore the sample by signing in, adding items to the To Do list, removing the user account, and starting again.  Notice that if you stop the application without removing the user account, the next time you run the application you won't be prompted to sign-in again - that is the sample implements a persistent cache for ADAL, and remembers the tokens from the previous run.
 
 NOTE: Remember, the To Do list is stored in memory in this TodoListService sample. Each time you run the TodoListService API, your To Do list will get emptied.
-
-## How To Deploy This Sample to Azure
-
-Coming soon.
-
-##About The Code
-
-Coming soon.
-
-## How To Recreate This Sample
-
-First, in Visual Studio 2015 CTP6 create an empty solution to host the  projects.  Then, follow these steps to create each project.
-
-### Creating the TodoListService Project
-
-1. In the solution, create a new "ASM.NET 5 MVC Web API" project called TodoListService.
-2. Enable SSL on the project by following the steps outlined in the below section.
-2. Add the `Microsoft.AspNet.Security.OAuthBearer` and `Microsoft.Framework.ConfigurationModel.Json` NuGets to the project.
-2. Create a new `Models` folder, and add a new class to it called `TodoItem.cs`.  Copy the implementation of TodoItem from this sample into the class.
-3. Delete the existing `ValuesController.cs`, and add a new Web API controller class called `TodoListController`.
-4. Copy the implementation of the TodoListController from this sample into the controller.  Don't forget to add the `[Authorize]` attribute to the class.
-5. In `TodoListController` resolving missing references by adding `using` statements for `System.Collections.Concurrent`, `TodoListService.Models`, `System.Security.Claims`.
-6. Add a new ASP.NET Configuration File called `config.json` to the project.  Replace its contents with those of the sample.
-7. Replace the implementation of `Startup.cs` with that of the sample, resolving any missing references such as `Microsoft.Framework.ConfigurationModel`.
-
-### Creating the TodoListClient Project
-
-1. In the solution, create a new Windows --> WPF Application called TodoListClient.
-2. Add the (stable release) Active Directory Authentication Library (ADAL) NuGet, `Microsoft.IdentityModel.Clients.ActiveDirectory` to the project.
-3. Add  assembly references to `System.Net.Http`, `System.Web.Extensions`, `System.Security`, and `System.Configuration`.
-4. Add a new class to the project called `TodoItem.cs`.  Copy the code from the sample project file of same name into this class, completely replacing the code in the file in the new project.
-5. Add a new class to the project called `FileCache.cs`.  Copy the code from the sample project file of same name into this class, completely replacing the code in the file in the new project.
-6. Copy the markup from `MainWindow.xaml' in the sample project into the file of same name in the new project, completely replacing the markup in the file in the new project.
-7. Copy the code from `MainWindow.xaml.cs` in the sample project into the file of same name in the new project, completely replacing the code in the file in the new project.
-8. In `app.config` create keys for `ida:AADInstance`, `ida:Tenant`, `ida:ClientId`, `ida:RedirectUri`, `todo:TodoListResourceId`, and `todo:TodoListBaseAddress` and set them accordingly.  For the public Azure cloud, the value of `ida:AADInstance` is `https://login.windows.net/{0}`.
-
-Finally, in the properties of the solution itself, set both projects as startup projects.  Follow the steps in "How to Run This Sample" to configure and run each project.
-
-### Enable SSL in Visual Studio 2015
-These steps are temporarily necessary to enable SSL only for Visual Studio 2015: First, hit F5 to run the application.  Once you see the homepage, you may close the browser and stop IIS Express.  In a text editor, open the file `%userprofile%\documents\IISExpress\config\applicatoinhost.confg`.  Find the entry for your app in the `<sites>` node.  Add an https protocol binding to this entry for a port between 44300 and 44399, similar to the following:
-
-```
-<site name="WebApplication1" id="2">
-	<application path="/" applicationPool="Clr4IntegratedAppPool">
-        	<virtualDirectory path="/" physicalPath="c:\users\billhie\documents\visual studio 2015\Projects\WebApplication1\WebApplication1" />
-        </application>
-        <bindings>
-            <binding protocol="http" bindingInformation="*:53756:localhost" />
-            <binding protocol="https" bindingInformation="*:44300:localhost" />
-        </bindings>
-    </site>
-```
-Save and close the file.  In Visual Studio, open the properties page of your web app.  In the Debug menu, enable the Launch Browser checkbox and enter the same URL as the protocol binding you added, e.g. `https://localhost:44300/`.  Your app will now run at this address.

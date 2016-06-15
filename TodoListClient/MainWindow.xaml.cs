@@ -37,6 +37,7 @@ using System.Net.Http.Headers;
 using System.Web.Script.Serialization;
 using System.Runtime.InteropServices;
 using System.Configuration;
+using Newtonsoft.Json;
 
 namespace TodoListClient
 {
@@ -72,42 +73,16 @@ namespace TodoListClient
         public MainWindow()
         {
             InitializeComponent();
-
-            //
-            // As the application starts, try to get an access token without prompting the user.  If one exists, populate the To Do list.  If not, continue.
-            //
             authContext = new AuthenticationContext(authority, new FileCache());
-            AuthenticationResult result = null;
-            try
-            {
-                result = authContext.AcquireToken(todoListResourceId, clientId, redirectUri, PromptBehavior.Never);
-
-                // A valid token is in the cache - get the To Do list.
-                SignInButton.Content = "Clear Cache";
-                GetTodoList();
-            }
-            catch (AdalException ex)
-            {
-                if (ex.ErrorCode == "user_interaction_required")
-                {
-                    // There are no tokens in the cache.  Proceed without calling the To Do list service.
-                }
-                else
-                {
-                    // An unexpected error occurred.
-                    string message = ex.Message;
-                    if (ex.InnerException != null)
-                    {
-                        message += "Inner Exception : " + ex.InnerException.Message;
-                    }
-                    MessageBox.Show(message);
-                }
-                return;
-            }
-
+            GetTodoList(true);
         }
 
-        private async void GetTodoList()
+        private void GetTodoList()
+        {
+            GetTodoList(false);
+        }
+
+        private async void GetTodoList(bool isAppStarting)
         {
             //
             // Get an access token to call the To Do service.
@@ -115,15 +90,19 @@ namespace TodoListClient
             AuthenticationResult result = null;
             try
             {
-                result = authContext.AcquireToken(todoListResourceId, clientId, redirectUri, PromptBehavior.Never);
+                result = await authContext.AcquireTokenAsync(todoListResourceId, clientId, redirectUri, new PlatformParameters(PromptBehavior.Never));
+                SignInButton.Content = "Clear Cache";
             }
             catch (AdalException ex)
             {
                 // There is no access token in the cache, so prompt the user to sign-in.
                 if (ex.ErrorCode == "user_interaction_required")
                 {
-                    MessageBox.Show("Please sign in first");
-                    SignInButton.Content = "Sign In";
+                    if (!isAppStarting)
+                    {
+                        MessageBox.Show("Please sign in to view your To-Do list");
+                        SignInButton.Content = "Sign In";
+                    }
                 }
                 else
                 {
@@ -131,7 +110,7 @@ namespace TodoListClient
                     string message = ex.Message;
                     if (ex.InnerException != null)
                     {
-                        message += "Inner Exception : " + ex.InnerException.Message;
+                        message += "Error Code: " + ex.ErrorCode + "Inner Exception : " + ex.InnerException.Message;
                     }
                     MessageBox.Show(message);
                 }
@@ -177,7 +156,7 @@ namespace TodoListClient
             AuthenticationResult result = null;
             try
             {
-                result = authContext.AcquireToken(todoListResourceId, clientId, redirectUri, PromptBehavior.Never);
+                result = await authContext.AcquireTokenAsync(todoListResourceId, clientId, redirectUri, new PlatformParameters(PromptBehavior.Never));
             }
             catch (AdalException ex)
             {
@@ -193,7 +172,7 @@ namespace TodoListClient
                     string message = ex.Message;
                     if (ex.InnerException != null)
                     {
-                        message += "Inner Exception : " + ex.InnerException.Message;
+                        message += "Error Code: " + ex.ErrorCode + "Inner Exception : " + ex.InnerException.Message;
                     }
 
                     MessageBox.Show(message);
@@ -210,7 +189,7 @@ namespace TodoListClient
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
 
             // Forms encode Todo item, to POST to the todo list web api.
-            HttpContent content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("Title", TodoText.Text) });
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(new { Title = TodoText.Text }), System.Text.Encoding.UTF8, "application/json");
 
             // Call the To Do list service.
             HttpResponseMessage response = await httpClient.PostAsync(todoListBaseAddress + "/api/todolist", content);
@@ -226,7 +205,7 @@ namespace TodoListClient
             }
         }
 
-        private void SignIn(object sender = null, RoutedEventArgs args = null)
+        private async void SignIn(object sender = null, RoutedEventArgs args = null)
         {
             // If there is already a token in the cache, clear the cache and update the label on the button.
             if (SignInButton.Content.ToString() == "Clear Cache")
@@ -245,15 +224,15 @@ namespace TodoListClient
             AuthenticationResult result = null;
             try
             {
-                result = authContext.AcquireToken(todoListResourceId, clientId, redirectUri, PromptBehavior.Always);
+                result = await authContext.AcquireTokenAsync(todoListResourceId, clientId, redirectUri, new PlatformParameters(PromptBehavior.Always));
                 SignInButton.Content = "Clear Cache";
                 GetTodoList();
             }
             catch (AdalException ex)
             {
-                if (ex.ErrorCode == "authentication_canceled")
+                if (ex.ErrorCode == "access_denied")
                 {
-                    MessageBox.Show("Sign in was canceled by the user");
+                    // The user canceled sign in, take no action.
                 }
                 else
                 {
@@ -261,7 +240,7 @@ namespace TodoListClient
                     string message = ex.Message;
                     if (ex.InnerException != null)
                     {
-                        message += "Inner Exception : " + ex.InnerException.Message;
+                        message += "Error Code: " + ex.ErrorCode + "Inner Exception : " + ex.InnerException.Message;
                     }
 
                     MessageBox.Show(message);
