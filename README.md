@@ -63,7 +63,7 @@ There are two projects in this sample.  Each needs to be separately registered i
 8. For the Redirect URI, enter `http://TodoListClient`.  Click finish.
 9. Click the Configure tab of the application.
 10. Find the Client ID value and copy it aside, you will need this later when configuring your application.
-11. In "Permissions to Other Applications", click "Add Application."  Select "Other" in the "Show" dropdown, and click the upper check mark.  Locate & click on the TodoListService, and click the bottom check mark to add the application.  Select "Access TodoListService" from the "Delegated Permissions" dropdown, and save the configuration.
+11. In "Permissions to Other Applications", click "Add Application."  Select "All Apps" in the "Show" dropdown, and click the upper check mark.  Locate & click on the TodoListService, and click the bottom check mark to add the application.  Select "Access TodoListService" from the "Delegated Permissions" dropdown, and save the configuration.
 
 ### Step 4:  Configure the sample to use your Azure AD tenant
 
