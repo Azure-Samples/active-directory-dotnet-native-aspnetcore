@@ -4,22 +4,20 @@ platforms: dotnet
 author: dstrockis
 ---
 
-# Caling a ASP.NET 5 Web API from a WPF application using Azure AD
+# Calling a ASP.NET Core Web API from a WPF application using Azure AD
 
-A WPF application that calls a Web API running on ASP.NET 5 protected by Azure AD OAuth Bearer Authentication.
+A WPF application that calls a Web API running on ASP.NET Core protected by Azure AD OAuth Bearer Authentication.
 
-This sample demonstrates a .Net WPF application calling a web API that is secured using Azure AD. The .Net application uses the Active Directory Authentication Library (ADAL) to obtain a JWT access token through the OAuth 2.0 protocol. The access token is sent to the ASP.NET 5 Web API, which authenticates the user using the OWIN OAuth Bearer Authentication middleware.
+This sample demonstrates a .Net WPF application calling a web API that is secured using Azure AD. The .Net application uses the Active Directory Authentication Library (ADAL) to obtain a JWT access token through the OAuth 2.0 protocol. The access token is sent to the ASP.NET Core Web API, which authenticates the user using the ASP.NET JWT Bearer Authentication middleware.
 
 For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).
 
-> This sample has finally been updated to ASP.NET Core RC2.  Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
+> This sample been updated to ASP.NET Core GA.  Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
 
 ## How To Run This Sample
 
 Getting started is simple!  To run this sample you will need:
-- [.NET Core & .NET Core SDK RC2 releases](https://www.microsoft.com/net/download)
-- [ASP.NET Core RC2 release](https://blogs.msdn.microsoft.com/webdev/2016/05/16/announcing-asp-net-core-rc2/)
-- [Visual Studio 2015 Update 2](https://www.visualstudio.com/en-us/downloads/visual-studio-2015-downloads-vs.aspx)
+- Install .NET Core for Windows by following the instructions at [dot.net/core](https://dot.net/core), which will include Visual Studio 2015 Update 3.
 - An Internet connection
 - An Azure subscription (a free trial is sufficient)
 
