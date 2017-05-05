@@ -17,7 +17,7 @@ For more information about how the protocols work in this scenario and other sce
 ## How To Run This Sample
 
 Getting started is simple!  To run this sample you will need:
-- Install .NET Core for Windows by following the instructions at [dot.net/core](https://dot.net/core), which will include Visual Studio 2015 Update 3.
+- Install .NET Core for Windows by following the instructions at [dot.net/core](https://dot.net/core), which will include Visual Studio 2017.
 - An Internet connection
 - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, please see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/) 
 - A user account in your Azure AD tenant. This sample will not work with a Microsoft account, so if you signed in to the Azure portal with a Microsoft account and have never created a user account in your directory before, you need to do that now.
@@ -58,7 +58,7 @@ There are two projects in this sample.  Each needs to be separately registered i
 
 #### Configure the TodoListService project
 
-1. Open the solution in Visual Studio 2015.
+1. Open the solution in Visual Studio 2017.
 2. In the TodoListService project, open the `appsettings.json` file.
 3. Find the `Tenant` property and replace the value with your AAD tenant name, e.g. contoso.onmicrosoft.com.
 4. Find the `Audience` property and replace the value with the App ID URI you registered earlier, for example `https://<your_tenant_name>/TodoListService`.
