@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TodoListService
 {
@@ -30,7 +28,14 @@ namespace TodoListService
             services.AddMvc();
 
             // Add Authentication services.
-            services.AddAuthentication();
+            services.AddAuthentication()
+                // Configure the app to use Jwt Bearer Authentication
+                .AddJwtBearer(option=> new JwtBearerOptions
+                {
+                    Authority = String.Format(Configuration["AzureAd:AadInstance"], Configuration["AzureAD:Tenant"]),
+                    Audience = Configuration["AzureAd:Audience"]
+                }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,15 +43,6 @@ namespace TodoListService
         {
             // Add the console logger.
             loggerFactory.AddConsole(LogLevel.Debug);
-
-            // Configure the app to use Jwt Bearer Authentication
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                Authority = String.Format(Configuration["AzureAd:AadInstance"], Configuration["AzureAD:Tenant"]),
-                Audience = Configuration["AzureAd:Audience"],
-            });
 
             app.UseMvc(routes =>
             {
