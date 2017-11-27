@@ -2,25 +2,45 @@
 services: active-directory
 platforms: dotnet
 author: jmprieur
+level: 200
+client: .NET native (WPF)
+service: ASP.NET Core 2.0
+endpoint: AAD V1
 ---
 
 # Calling a ASP.NET Core Web API from a WPF application using Azure AD
 
-A WPF application that calls a Web API running on ASP.NET Core 2.0 protected by Azure AD OAuth Bearer Authentication.
+## About this sample
+### Scenario
+You expose a Web API and you want to protect it so that only authenticated user can access it. 
 
-This sample demonstrates a .Net WPF application calling a web API that is secured using Azure AD. The .Net application uses the Active Directory Authentication Library (ADAL) to obtain a JWT access token through the OAuth 2.0 protocol. The access token is sent to the ASP.NET Core Web API, which authenticates the user using the ASP.NET JWT Bearer Authentication middleware.
+This sample presents a Web API running on ASP.NET Core 2.0, protected by Azure AD OAuth Bearer Authentication. The Web API is exercised by a .NET Desktop WPF application. 
+The .Net application uses the Active Directory Authentication Library (ADAL.Net) to obtain a JWT access token through the [OAuth 2.0](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code) protocol. The access token is sent to the ASP.NET Core Web API, which authenticates the user using the ASP.NET JWT Bearer Authentication middleware.
 
+### more information
 For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).
 
 > This sample been updated to ASP.NET Core 2.0.  Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
 
+### User experience with this sample
+The Web API (TodoListService) maintains an in-memory collection of to-do items per authenticated user. Several applications signed-in under the same identity share the to-do list.
+
+The WPF application (TodoListClient) enables a user to:
+- Sign in. The first time a user signs it, a consent screen is presented letting him consent for the application accessing the TodoList Service and the Azure Active Directory. When s/he has signed-in, the user sees the list of to-do items exposed by Web API for the signed-in identity
+- add more to-do items (buy clicking on Add item).
+
+Next time a user runs the application, the user is signed-in with the same identity as the application maintains a cache on disk. Users can clear the cache (which will also have the effect of signing them out)  
+![TodoList Client](.\Readme\todolist-client.png)
+
+
+
 ## How To Run This Sample
 
-Getting started is simple!  To run this sample you will need:
+### Pre-requisites
 - Install .NET Core for Windows by following the instructions at [dot.net/core](https://dot.net/core), which will include Visual Studio 2017.
 - An Internet connection
 - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, please see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/) 
-- A user account in your Azure AD tenant. This sample will not work with a Microsoft account, so if you signed in to the Azure portal with a Microsoft account and have never created a user account in your directory before, you need to do that now (See [Quickstart: Add new users to Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/add-users-azure-active-directory)
+- A user account in your Azure AD tenant. This sample will not work with a Microsoft account (MSA, live account), so if you signed in to the Azure portal with a Microsoft personal account and have never created a user account in your directory before, you need to do that now (See [Quickstart: Add new users to Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/add-users-azure-active-directory)
 
 ### Step 1:  Clone or download this repository
 
@@ -41,8 +61,6 @@ There are two projects in this sample.  Each needs to be separately registered i
 1. Enter a friendly **Name** for the application, for example 'TodoListService' and select 'Web Application and/or Web API' as the **Application Type**. For the **sign-on URL**, enter the base URL for the sample, which is by default `https://localhost:44351`.  Click on **Create** to create the application.
 1. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
 1. Find the Application ID value and copy it to the clipboard.
-1. For the App ID URI, enter https://<your_tenant_name>/TodoListService, replacing <your_tenant_name> with the name of your Azure AD tenant.
-1. Save the modifications to the properties
 1. From the Azure portal, note the following information: 
     - The Tenant domain: See the App ID URI base URL. For example: contoso.onmicrosoft.com 
     - The Tenant ID: See the Endpoints blade (button next to *New application registration*). Record the GUID from any of the endpoint URLs. For example: da41245a5-11b3-996c-00a8-4d99re19f292. Alternatively you can also find the Tenant ID in the Properties of the Azure Active Directory object (this is the value of the **Directory ID** property)
@@ -61,7 +79,7 @@ There are two projects in this sample.  Each needs to be separately registered i
 
 ### Step 4:  Configure the sample to use your Azure AD tenant
 
-#### Configure the TodoListService project
+#### Configure the TodoListService C# project
 
 1. Open the solution in Visual Studio.
 2. In the TodoListService project, open the `appsettings.json` file.
@@ -69,7 +87,7 @@ There are two projects in this sample.  Each needs to be separately registered i
 4. Find the `TenantId` property and replace the value with the Tenant ID you registered earlier, 
 5. Find the `ClientId` property and replace the value with the Application ID (Client ID) property of the Service application, that you registered earlier.
 
-#### Configure the TodoListClient project
+#### Configure the TodoListClient C# project
 
 1. In the TodoListClient project, open `App.config`.
 2. Find the app key `ida:Tenant` and replace the value with your AAD Tenant ID (GUID). Alternatively you can also use your AAD tenant Name (e.g. contoso.onmicrosoft.com).
@@ -83,9 +101,12 @@ There are two projects in this sample.  Each needs to be separately registered i
 
 Clean the solution, rebuild the solution, and run it.  You might want to go into the solution properties and set both projects as startup projects, with the service project starting first.
 
-Explore the sample by signing in, adding items to the To Do list, removing the user account, and starting again.  Notice that if you stop the application without removing the user account, the next time you run the application you won't be prompted to sign-in again - that is the sample implements a persistent cache for ADAL, and remembers the tokens from the previous run.
+When you start the Web API, you will get an empty web page. This is expected.
+
+Explore the sample by signing in into the TodoList client, adding items to the To Do list, removing the user account (Clearing the cache), and starting again.  As explained, if you stop the application without removing the user account, the next time you run the application you won't be prompted to sign-in again - that is the sample implements a persistent cache for ADAL, and remembers the tokens from the previous run.
 
 NOTE: Remember, the To Do list is stored in memory in this TodoListService sample. Each time you run the TodoListService API, your To Do list will get emptied.
+
 
 
 ## How the code was created?
@@ -158,3 +179,7 @@ If you are using Visual Studio 2017
     1. Change the **App URL** field to be `https://localhost:44351` as this is the URL registered in the Azure AD application representing our Web API.
     1. Check the **Enable SSL** field
 
+
+## Related content
+### Other documentation / samples
+The scenarios involving Azure Active directory with ASP.NET Core are described in ASP.Net Core | Security | Authentication | [Azure Active Directory](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/azure-active-directory/) 
