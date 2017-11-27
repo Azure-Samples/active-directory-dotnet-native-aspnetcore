@@ -30,7 +30,7 @@ The WPF application (TodoListClient) enables a user to:
 - add more to-do items (buy clicking on Add item).
 
 Next time a user runs the application, the user is signed-in with the same identity as the application maintains a cache on disk. Users can clear the cache (which will also have the effect of signing them out)  
-![TodoList Client](.\Readme\todolist-client.png)
+![TodoList Client](./Readme/todolist-client.png)
 
 
 
