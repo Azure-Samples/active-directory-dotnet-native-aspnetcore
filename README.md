@@ -24,7 +24,7 @@ The .Net application uses the Active Directory Authentication Library (ADAL.Net)
 
 ![Topology](./ReadmeFiles/topology.png)
 
-> This sample been updated to ASP.NET Core 2.0.  Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
+> This sample has been updated to ASP.NET Core 2.0.  Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
 
 ### User experience with this sample
 
@@ -63,7 +63,7 @@ There are two projects in this sample. Each needs to be separately registered in
   - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
   - modify the Visual Studio projects' configuration files.
 
-If you want to do use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
 
 #### First step: choose the Azure AD tenant where you want to create your applications
 
@@ -121,17 +121,17 @@ Clean the solution, rebuild the solution, and run it.  You might want to go into
 
 When you start the Web API, you'll get an empty web page. This is expected.
 
-Explore the sample by signing in into the TodoList client, adding items to the To Do list, removing the user account (Clearing the cache), and starting again.  As explained, if you stop the application without removing the user account, the next time you run the application, you won't be prompted to sign in again - that is the sample implements a persistent cache for ADAL, and remembers the tokens from the previous run.
+Explore the sample by signing in into the TodoList client, adding items to the To Do list, removing the user account (clearing the cache), and starting again.  As explained, if you stop the application without removing the user account, the next time you run the application, you won't be prompted to sign in again - that is because the sample implements a persistent cache for ADAL, and remembers the tokens from the previous run.
 
 NOTE: Remember, the To Do list is stored in memory in this TodoListService sample. Each time you run the TodoListService API, your To Do list will get emptied.
 
-## How the code was created?
+## How was the code was created?
 
 ### Code for the service
 
 The code for the service was created in the following way:
 
-#### Create of the web api using the ASP.NET templates
+#### Create the web api using the ASP.NET templates
 
 ```Text
 md TodoListService
@@ -139,7 +139,7 @@ cd TodoListService
 dotnet new webapi -au=SingleOrg
 ```
 
-#### Add a model (TodoListItem) and modifying the controller
+#### Add a model (TodoListItem) and modify the controller
 
 In the TodoListService project, add a folder named `Models` and then a file named `TodoItem.cs` with the following content:
 
@@ -191,7 +191,7 @@ namespace TodoListService.Controllers
 }
 ```
 
-This code gets the todo list items associated with their owner, which is the identity of the user using the Web API. It also adds todo list items associated to with the same user.
+This code gets the todo list items associated with their owner, which is the identity of the user using the Web API. It also adds todo list items associated with the same user.
 There is no persistence as this would be beyond the scope of this sample
 
 #### Change the App URL
@@ -210,7 +210,7 @@ This project has one WebApp / Web API projects. To deploy it to Azure Web Sites,
 
 - create an Azure Web Site
 - publish the Web App / Web APIs to the web site, and
-- update it client(s) to call the web site instead of IIS Express.
+- update client(s) to call the web site instead of IIS Express.
 
 ### Create and Publish the `TodoListService` to an Azure Web Site
 
@@ -229,7 +229,7 @@ This project has one WebApp / Web API projects. To deploy it to Azure Web Sites,
 3. On the applications tab, select the `TodoListService` application.
 4. From the Settings -> Properties and Settings -> Reply URLs menus, update the Sign-On URL, and Reply URL fields to the address of your service, for example [https://TodoListService-contoso.azurewebsites.net](https://TodoListService-contoso.azurewebsites.net). Save the configuration.
 
-### Update the `TodoListClient` to call the `TodoListService` Running in Azure Web Sites
+### Update the `TodoListClient` to call the `TodoListService` running in Azure Web Sites
 
 1. In Visual Studio, go to the `TodoListClient` project.
 2. Open `TodoListClient\App.Config`.  Only one change is needed - update the `todo:TodoListBaseAddress` key value to be the address of the website you published,
