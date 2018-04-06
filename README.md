@@ -115,7 +115,7 @@ In the steps below, ClientID is the same as Application ID or AppId.
 5. Find the app key `todo:TodoListResourceId` and replace the value with the ApplicationID (Client ID) of the Service application (a GUID)
 6. If you changed the default value, find the app key `todo:TodoListBaseAddress` and replace the value with the base address of the TodoListService project.
 
-### Step 4:  Run the sample
+### Step 4: Run the sample
 
 Clean the solution, rebuild the solution, and run it.  You might want to go into the solution properties and set both projects as startup projects, with the service project starting first.
 
@@ -125,7 +125,7 @@ Explore the sample by signing in into the TodoList client, adding items to the T
 
 NOTE: Remember, the To Do list is stored in memory in this TodoListService sample. Each time you run the TodoListService API, your To Do list will get emptied.
 
-## How was the code was created?
+## How was the code created?
 
 ### Code for the service
 
