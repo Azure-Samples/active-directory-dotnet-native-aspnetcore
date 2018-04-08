@@ -1,4 +1,11 @@
 {
+  "Sample": {
+    "Title": "A WPF application that calls a Web API running on ASP.NET Core 2.0 protected by Azure AD using OAuth 2.0 access tokens. ",
+    "Level": 200,
+    "Client": ".NET Desktop (WPF)",
+    "Service": "ASP.NET Core Web API"
+  },
+
   /*
     This section describes the Azure AD Applications to configure, and their dependencies
   */
